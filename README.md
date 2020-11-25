@@ -2,7 +2,7 @@
 Rip ebooks from Pearson into .pdf format
 
 ### Why?
-As of November 2020 Pearson is still using Flash for their ebooks (Flash EOL is in December 2020) and this tool heps you get a copy of your ebooks before flash goes out of business.
+As of November 2020 Pearson is still using Flash for their ebooks (Flash EOL is in December 2020) and this tool helps you get a copy of your ebooks before flash goes out of business.
 
 ### Requirements:
 - [Python 3](https://www.python.org/downloads/)
