@@ -43,13 +43,21 @@ async def main():
                         global done
                         if done:
                             return
-                        async with cs.get(f"{baseurl}{number}") as req:
-                            if not req.ok:
-                                done = True
-                                return
-                            async with aiofiles.open(f"./dump/pearson/etext-ise/{id}/{number}.png", 'wb') as f:
-                                await f.write(await req.read())
-                                print(f"Fetched page {number}!")
+                        retries = 0
+                        while True:
+                            try:
+                                async with cs.get(f"{baseurl}{number}") as req:
+                                    if not req.ok:
+                                        done = True
+                                        return
+                                    async with aiofiles.open(f"./dump/pearson/etext-ise/{id}/{number}.png", 'wb') as f:
+                                        await f.write(await req.read())
+                                        print(f"Fetched page {number}!")
+                            except Exception:
+                                if retries > max_retries:
+                                    raise
+                                retries += 1
+                                continue
 
                     async def worker():
                         while not tasks.empty():
@@ -62,6 +70,7 @@ async def main():
 
                     i = 0
                     amount = 25
+                    max_retries = 3
                     while not done:
                         tasks = asyncio.Queue()
                         for x in range(i, i + amount):
@@ -95,13 +104,21 @@ async def main():
                         global done
                         if done:
                             return
-                        async with cs.get(f"{baseurl}{number}") as req:
-                            if not req.ok:
-                                done = True
-                                return
-                            async with aiofiles.open(f"./dump/pearson/reader-plus/{id}/{number}.png", 'wb') as f:
-                                await f.write(await req.read())
-                                print(f"Fetched page {number}!")
+                        retries = 0
+                        while True:
+                            try:
+                                async with cs.get(f"{baseurl}{number}") as req:
+                                    if not req.ok:
+                                        done = True
+                                        return
+                                    async with aiofiles.open(f"./dump/pearson/reader-plus/{id}/{number}.png", 'wb') as f:
+                                        await f.write(await req.read())
+                                        print(f"Fetched page {number}!")
+                            except Exception:
+                                if retries > max_retries:
+                                    raise
+                                retries += 1
+                                continue
 
                     async def worker():
                         while not tasks.empty():
@@ -114,6 +131,7 @@ async def main():
 
                     i = 0
                     amount = 25
+                    max_retries = 3
                     while not done:
                         tasks = asyncio.Queue()
                         for x in range(i, i + amount):
