@@ -1,7 +1,8 @@
-import os
-import glob
-from fpdf import FPDF
 from PIL import Image
+from fpdf import FPDF
+import glob
+import sys
+import os
 
 
 def makePdf(pdfFileName, listPages):
@@ -27,7 +28,7 @@ if __name__ == '__main__':
         pngList[i] = int(file[:-4])
     pngList = sorted(pngList)
     print(f'Found {len(pngList)} images to process...')
-    dirName = os.path.dirname(os.path.realpath(__file__))[os.path.dirname(os.path.realpath(__file__)).rfind('\\')+1:]
+    dirName = os.path.dirname(os.path.realpath(__file__))[os.path.dirname(os.path.realpath(__file__)).rfind('\\' if sys.platform.startswith("win") else "/")+1:]
     print(f'Starting to compile \"{dirName}.pdf\"')
     makePdf(dirName, pngList)
     input('All Done!')

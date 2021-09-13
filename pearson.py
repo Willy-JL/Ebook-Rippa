@@ -1,16 +1,25 @@
+from distutils.spawn import find_executable
 from seleniumwire import webdriver
 import aiofiles
 import pathlib
 import asyncio
 import aiohttp
 import shutil
+import sys
 import re
 
 
 async def main():
     global done
     options = {'ignore_http_methods': ['HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE']}
-    driver = webdriver.Chrome("chromedriver", seleniumwire_options=options)
+    if sys.platform.startswith("win"):
+        chromedriver = "chromedriver.exe"
+    else:
+        if find_executable("chromedriver"):
+            chromedriver = "chromedriver"
+        else:
+            chromedriver = "./chromedriver"
+    driver = webdriver.Chrome(chromedriver, seleniumwire_options=options)
     driver.set_page_load_timeout(120)
     driver.set_script_timeout(120)
     driver.get('https://www.pearson.it/')
