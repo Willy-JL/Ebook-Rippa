@@ -53,6 +53,7 @@ async def main():
                                     async with aiofiles.open(f"./dump/pearson/etext-ise/{id}/{number}.png", 'wb') as f:
                                         await f.write(await req.read())
                                         print(f"Fetched page {number}!")
+                                break
                             except Exception:
                                 if retries > max_retries:
                                     raise
@@ -114,6 +115,7 @@ async def main():
                                     async with aiofiles.open(f"./dump/pearson/reader-plus/{id}/{number}.png", 'wb') as f:
                                         await f.write(await req.read())
                                         print(f"Fetched page {number}!")
+                                break
                             except Exception:
                                 if retries > max_retries:
                                     raise
