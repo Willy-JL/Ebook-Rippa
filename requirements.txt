@@ -1,2 +1,4 @@
+fpdf
+pillow
 selenium
 selenium-wire
