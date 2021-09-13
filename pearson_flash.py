@@ -3,7 +3,7 @@ from seleniumwire import webdriver
 import os
 
 options = {'ignore_http_methods': ['HEAD', 'POST', 'PUT', 'DELETE', 'CONNECT', 'OPTIONS', 'TRACE']}
-driver = webdriver.Chrome('chromedriver.exe', seleniumwire_options=options)
+driver = webdriver.Chrome(seleniumwire_options=options)
 driver.set_page_load_timeout(120)
 driver.set_script_timeout(120)
 driver.get('https://www.pearson.it/')
