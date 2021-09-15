@@ -62,9 +62,19 @@ if __name__ == "__main__":
 
         try:
             if type == "1":
-                id = re.match(".*/BooktabWeb/#/([^/]*)/.*", driver.current_url)[1]
-                shutil.rmtree(f"./dump/zanichelli/booktab/{id}", ignore_errors=True)
+                id = input("With what name should this book be saved?\n"
+                           "(Leave empty to autodetect the id)\n"
+                           ">>> ") or re.match(".*/BooktabWeb/#/([^/]*)/.*", driver.current_url)[1]
                 pathlib.Path(f"./dump/zanichelli/booktab/{id}").mkdir(parents=True, exist_ok=True)
+                while True:
+                    try:
+                        i = int(input("From what number do you want to begin?\n"
+                                      "(If you have ripped a part of this ebook already put the number of the last .png file +1, otherwise just put 0)\n"
+                                      ">>> "))
+                        assert i >= 0
+                        break
+                    except Exception:
+                        print("Please choose a valid number!")
                 print(f"\nStarted dumping Booktab book {id}...")
 
                 driver.switch_to.default_content()
@@ -74,7 +84,6 @@ if __name__ == "__main__":
                 except Exception:
                     pass
 
-                i = 0
                 while True:
                     canvas = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, ".deck-current canvas")))
                     time.sleep(0.5)
@@ -94,9 +103,19 @@ if __name__ == "__main__":
                         break
 
             if type == "2":
-                id = "".join([ char.lower() for char in driver.title if char.isalnum() ])
-                shutil.rmtree(f"./dump/zanichelli/kitaboo/{id}", ignore_errors=True)
+                id = input("With what name should this book be saved?\n"
+                           "(Leave empty to autodetect the id)\n"
+                           ">>> ") or "".join([ char.lower() for char in driver.title if char.isalnum() ])
                 pathlib.Path(f"./dump/zanichelli/kitaboo/{id}").mkdir(parents=True, exist_ok=True)
+                while True:
+                    try:
+                        i = int(input("From what number do you want to begin?\n"
+                                      "(If you have ripped a part of this ebook already put the number of the last .png file +1, otherwise just put 0)\n"
+                                      ">>> "))
+                        assert i >= 0
+                        break
+                    except Exception:
+                        print("Please choose a valid number!")
                 print(f"\nStarted dumping Kitaboo book {id}...")
 
                 try:
@@ -104,7 +123,6 @@ if __name__ == "__main__":
                 except Exception:
                     pass
 
-                i = 0
                 while True:
                     driver.switch_to.default_content()
                     driver.switch_to.frame(driver.find_element_by_css_selector(".epub_container_active"))

@@ -73,7 +73,9 @@ async def main():
                         while not tasks.empty():
                             await tasks.get_nowait()
 
-                    id = re.match(".*/eplayer/pdfassets/.*/.*/(.*)/pages/.*", template.url)[1]
+                    id = input("With what name should this book be saved?\n"
+                               "(Leave empty to autodetect the id)\n"
+                               ">>> ") or re.match(".*/eplayer/pdfassets/.*/.*/(.*)/pages/.*", template.url)[1]
                     shutil.rmtree(f"./dump/pearson/etext-ise/{id}", ignore_errors=True)
                     pathlib.Path(f"./dump/pearson/etext-ise/{id}").mkdir(parents=True, exist_ok=True)
                     print(f"\nStarted dumping eText ISE book {id}...")
@@ -135,7 +137,9 @@ async def main():
                         while not tasks.empty():
                             await tasks.get_nowait()
 
-                    id = re.match(".*/products/epubs/generated/(.*)/.*/pages/.*", template.url)[1]
+                    id = input("With what name should this book be saved?\n"
+                               "(Leave empty to autodetect the id)\n"
+                               ">>> ") or re.match(".*/products/epubs/generated/(.*)/.*/pages/.*", template.url)[1]
                     shutil.rmtree(f"./dump/pearson/reader-plus/{id}", ignore_errors=True)
                     pathlib.Path(f"./dump/pearson/reader-plus/{id}").mkdir(parents=True, exist_ok=True)
                     print(f"\nStarted dumping Reader+ book {id}...")
