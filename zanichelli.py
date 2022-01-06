@@ -78,9 +78,9 @@ if __name__ == "__main__":
                 print(f"\nStarted dumping Booktab book {id}...")
 
                 driver.switch_to.default_content()
-                driver.switch_to.frame(driver.find_element_by_css_selector("#bookviewerWindow"))
+                driver.switch_to.frame(driver.find_element(By.CSS_SELECTOR, "#bookviewerWindow"))
                 try:
-                    driver.find_element_by_css_selector(".darkGreySinglePageButton").click()
+                    driver.find_element(By.CSS_SELECTOR, ".darkGreySinglePageButton").click()
                 except Exception:
                     pass
 
@@ -94,7 +94,7 @@ if __name__ == "__main__":
                         print(f"Dumped page {i}!")
                     i += 1
                     try:
-                        page_number = driver.find_element_by_css_selector("#pageNumberValue").get_property("value")
+                        page_number = driver.find_element(By.CSS_SELECTOR, "#pageNumberValue").get_property("value")
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".darkGreyNextArrow"))).click()
                         WebDriverWait(driver, 30).until(text_changed((By.CSS_SELECTOR, "#pageNumberValue"), page_number))
                         time.sleep(0.5)
@@ -119,13 +119,13 @@ if __name__ == "__main__":
                 print(f"\nStarted dumping Kitaboo book {id}...")
 
                 try:
-                    driver.find_element_by_css_selector(".single-column-view-icon").find_element_by_xpath("./..").click()
+                    driver.find_element(By.CSS_SELECTOR, ".single-column-view-icon").find_element(By.XPATH, "./..").click()
                 except Exception:
                     pass
 
                 while True:
                     driver.switch_to.default_content()
-                    driver.switch_to.frame(driver.find_element_by_css_selector(".epub_container_active"))
+                    driver.switch_to.frame(driver.find_element(By.CSS_SELECTOR, ".epub_container_active"))
                     svg = WebDriverWait(driver, 30).until(EC.visibility_of_element_located((By.CSS_SELECTOR, "figure#bodyimage img[src]")))
                     svg_bytes = fetch_blob(driver, svg.get_attribute("src"))
                     cairosvg.svg2png(svg_bytes, scale=2, write_to=f"./dump/zanichelli/kitaboo/{id}/{i}.png")
@@ -133,8 +133,8 @@ if __name__ == "__main__":
                     i += 1
                     try:
                         driver.switch_to.default_content()
-                        assert driver.find_element_by_css_selector("rightnavigation-view").get_attribute("aria-hidden") == "false"
-                        driver.find_element_by_css_selector("button.rightNavigation").click()
+                        assert driver.find_element(By.CSS_SELECTOR, "rightnavigation-view").get_attribute("aria-hidden") == "false"
+                        driver.find_element(By.CSS_SELECTOR, "button.rightNavigation").click()
                         time.sleep(0.5)
                     except AssertionError:
                         print(f"\nFinished dumping Kitaboo book {id}!\n\n")

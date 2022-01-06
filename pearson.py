@@ -1,4 +1,5 @@
 from distutils.spawn import find_executable
+from selenium.webdriver.common.by import By
 from seleniumwire import webdriver
 import aiofiles
 import pathlib
@@ -33,9 +34,9 @@ async def main():
             if type == "1":
                 del driver.requests
                 try:
-                    element = driver.find_element_by_css_selector('.pageNavigation .pageNavigationContainer .nextPage .navigationBtn')
+                    element = driver.find_element(By.CSS_SELECTOR, '.pageNavigation .pageNavigationContainer .nextPage .navigationBtn')
                 except Exception:
-                    element = driver.find_element_by_css_selector('.pageNavigation .pageNavigationContainer .previousPage .navigationBtn')
+                    element = driver.find_element(By.CSS_SELECTOR, '.pageNavigation .pageNavigationContainer .previousPage .navigationBtn')
                 element.click()
                 driver.wait_for_request('/pages/*', timeout=30)
                 for request in driver.requests:
@@ -97,9 +98,9 @@ async def main():
             if type == "2":
                 del driver.requests
                 try:
-                    element = driver.find_element_by_css_selector('.pageNavigation .pageNavigationContainer .nextPage .navigationBtn')
+                    element = driver.find_element(By.CSS_SELECTOR, '.pageNavigation .pageNavigationContainer .nextPage .navigationBtn')
                 except Exception:
-                    element = driver.find_element_by_css_selector('.pageNavigation .pageNavigationContainer .previousPage .navigationBtn')
+                    element = driver.find_element(By.CSS_SELECTOR, '.pageNavigation .pageNavigationContainer .previousPage .navigationBtn')
                 element.click()
                 driver.wait_for_request('/pages/*', timeout=30)
                 for request in driver.requests:
