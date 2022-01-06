@@ -29,13 +29,14 @@ def fetch_blob(driver, uri):
     return base64.b64decode(result)
 
 
-class text_changed(object):
-    def __init__(self, locator, text):
+class text_changed():
+    def __init__(self, by, locator, text):
+        self.by = by
         self.locator = locator
         self.text = text
 
     def __call__(self, driver):
-        actual_text = EC._find_element(driver, self.locator).get_property("value")
+        actual_text = driver.find_element(self.by, self.locator).get_property("value")
         return actual_text != self.text
 
 
@@ -95,7 +96,7 @@ if __name__ == "__main__":
                     try:
                         page_number = driver.find_element(By.CSS_SELECTOR, "#pageNumberValue").get_property("value")
                         WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.CSS_SELECTOR, ".darkGreyNextArrow"))).click()
-                        WebDriverWait(driver, 30).until(text_changed((By.CSS_SELECTOR, "#pageNumberValue"), page_number))
+                        WebDriverWait(driver, 30).until(text_changed(By.CSS_SELECTOR, "#pageNumberValue", page_number))
                         time.sleep(0.5)
                     except TimeoutException:
                         print(f"\nFinished dumping Booktab book {id}!\n\n")
