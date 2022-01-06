@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium import webdriver
+import traceback
 import cairosvg
 import pathlib
 import shutil
@@ -140,4 +141,7 @@ if __name__ == "__main__":
                         print(f"\nFinished dumping Kitaboo book {id}!\n\n")
                         break
         except Exception:
-            print("\n\nSomething went wrong!\n\n")
+            print("\n\nSomething went wrong!\n")
+            exc = "".join(traceback.format_exception(*sys.exc_info()))
+            print(exc)
+            print("\n")

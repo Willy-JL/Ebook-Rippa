@@ -1,5 +1,6 @@
 from selenium.webdriver.common.by import By
 from seleniumwire import webdriver
+import traceback
 import aiofiles
 import pathlib
 import asyncio
@@ -158,7 +159,10 @@ async def main():
 
                     print(f"\nFinished dumping Reader+ book {id}!\n\n")
         except Exception:
-            print("\n\nSomething went wrong!\n\n")
+            print("\n\nSomething went wrong!\n")
+            exc = "".join(traceback.format_exception(*sys.exc_info()))
+            print(exc)
+            print("\n")
 
 
 if __name__ == "__main__":
