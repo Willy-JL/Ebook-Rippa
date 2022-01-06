@@ -104,7 +104,7 @@ async def main():
                 element.click()
                 driver.wait_for_request('/pages/*', timeout=30)
                 for request in driver.requests:
-                    if "/products/epubs/generated/" in str(request.url) and "/pages/" in str(request.url):
+                    if "/pages/page" in str(request.url):
                         template = request
                         break
 
@@ -140,7 +140,7 @@ async def main():
 
                     id = input("With what name should this book be saved?\n"
                                "(Leave empty to autodetect the id)\n"
-                               ">>> ") or re.match(".*/products/epubs/generated/(.*)/.*/pages/.*", template.url)[1]
+                               ">>> ") or re.match(".*/(.*?)/.*?/pages/.*", template.url)[1]
                     shutil.rmtree(f"./dump/pearson/reader-plus/{id}", ignore_errors=True)
                     pathlib.Path(f"./dump/pearson/reader-plus/{id}").mkdir(parents=True, exist_ok=True)
                     print(f"\nStarted dumping Reader+ book {id}...")
