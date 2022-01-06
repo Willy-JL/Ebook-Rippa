@@ -1,4 +1,3 @@
-from distutils.spawn import find_executable
 from selenium.webdriver.common.by import By
 from seleniumwire import webdriver
 import aiofiles
@@ -16,7 +15,7 @@ async def main():
     if sys.platform.startswith("win"):
         chromedriver = "chromedriver.exe"
     else:
-        if find_executable("chromedriver"):
+        if shutil.which("chromedriver"):
             chromedriver = "chromedriver"
         else:
             chromedriver = "./chromedriver"

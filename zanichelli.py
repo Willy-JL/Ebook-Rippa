@@ -1,7 +1,6 @@
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.common.exceptions import TimeoutException
-from distutils.spawn import find_executable
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 import cairosvg
@@ -44,7 +43,7 @@ if __name__ == "__main__":
     if sys.platform.startswith("win"):
         chromedriver = "chromedriver.exe"
     else:
-        if find_executable("chromedriver"):
+        if shutil.which("chromedriver"):
             chromedriver = "chromedriver"
         else:
             chromedriver = "./chromedriver"
